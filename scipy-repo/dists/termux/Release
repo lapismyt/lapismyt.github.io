@@ -1,0 +1,27 @@
+Codename: termux
+Version: 1
+Architectures: aarch64
+Description: termux repository
+Suite: termux
+Date: Fri, 22 Sep 2023 10:46:32 UTC
+Components: scipy
+MD5Sum:
+ f750a8ba52a3e367ac55fa30069f68f3 1913 scipy/binary-aarch64/Packages
+ c318864c960e06e8be9ed9bd37e300de 1096 scipy/binary-aarch64/Packages.xz
+ e4ade6b40ae0161c54d29ce476f97d25 383393 scipy/Contents-aarch64
+ 9c3a6339b981b3c48769f80fe89b0988 16332 scipy/Contents-aarch64.xz
+SHA1:
+ 3c51510bfd07e0d6611d6d1b75e26951a417397b 1913 scipy/binary-aarch64/Packages
+ d52746452db8af7b392ee5a35a2c3be69f503335 1096 scipy/binary-aarch64/Packages.xz
+ 4850de4a278d2a500a67465f39057612d1add198 383393 scipy/Contents-aarch64
+ 6e6ab7e27f70eb4d56a469a37924e38c9d019378 16332 scipy/Contents-aarch64.xz
+SHA256:
+ 5a2b39d76eee24da942b1af7f8fdb22c8e6f00fb39639570be5c08c8ea40bc1a 1913 scipy/binary-aarch64/Packages
+ 4a3db0ca7ac18e8c9c6d316b19e517336c23b31b42b674a777ec459b5043d638 1096 scipy/binary-aarch64/Packages.xz
+ b56b9968f511b39111103d4e669459a63770e27508a1f909b7160b077425d623 383393 scipy/Contents-aarch64
+ 5d272a3ed14ccbc41d32af91873f6b522be6a37225fa7209e925b15fd4551cd8 16332 scipy/Contents-aarch64.xz
+SHA512:
+ c855aefe46c0f4ba4211ab9c8fc87bd3d1d824894373818dd5f1409e856c3b572241097034a68bae94ab34e7dfb73d52a6f6c7a458a3e99537e870ec40f831f8 1913 scipy/binary-aarch64/Packages
+ af4c67deed77f19d17a2aca34982875a00ddc0c6d19ea9c7932d9b78cc10fa5759065eb34d0f452e2d36fb890da8c628f6212342ad6d4ac8d0d245ec41cc8662 1096 scipy/binary-aarch64/Packages.xz
+ dd93a225921fc1e0ad2c1bac82bcf3bcdc09c62a6be0d1b61b4878aca397a93f316105e131abdb73a02e7cd1f6b2a57688dd57a838df07f3936b157f7ec4f803 383393 scipy/Contents-aarch64
+ 44591cf5eed430c061232a2764f6694f93e1691ad4cc61a8c66e36c48a879d52f1fcd67290f9e2015b1100b72195eb370ec839fc591604540f99fc6d1a4ab3ae 16332 scipy/Contents-aarch64.xz

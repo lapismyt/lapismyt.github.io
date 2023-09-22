@@ -1,0 +1,45 @@
+Package: numpy
+Architecture: aarch64
+Installed-Size: 23784
+Maintainer: default
+Version: 1.20.3
+Homepage: http://www.numpy.org/
+Depends: openblas, python, libcrypt
+Description: NumPy is the fundamental package for scientific computing with Python.
+Filename: dists/termux/scipy/binary-aarch64/numpy_1.20.3_aarch64.deb
+Size: 3878104
+MD5Sum: 9986fb7e0de13c5b6387fb79de8cd4a1
+SHA1: 4a425fea36d33e82cc14212b3da048cd1cabae9e
+SHA256: b3e8d4572b850d51851b2f8822247adacc89200ae276550d0e3e1513390de158
+SHA512: b31a408dc2ba310069e9e05ce523686677599a74e1d71a5fc20249a6c6069ef9422757d0bbd6055401b619a3c36f6913cc3efb37a9a556acadc0be4e9a319260
+
+Package: openblas
+Architecture: aarch64
+Installed-Size: 11116
+Maintainer: default
+Version: 0.3.15
+Homepage: http://github.com/xianyi/OpenBLAS
+Depends: libgfortran5
+Description: Optimized BLAS (linear algebra) library with lapack
+Filename: dists/termux/scipy/binary-aarch64/openblas_0.3.15_aarch64.deb
+Size: 2204176
+MD5Sum: dd9404545d9111380f640b5082ca84bc
+SHA1: a659c087e57a05b53ea5c776aa7b4ee4b59cf0a9
+SHA256: e8e0909642221e6aef41c57af0d03fc32cde1103a461f0009319c96cad0a6c73
+SHA512: 6fe3a77c2f45abf472d043bb0a56df83c9567f939fd0516312148c81f4b25f9d63afd3f009aec9cd606b2d6c6b444ab083a55664e19c146e9648bee552d3ee8f
+
+Package: scipy
+Architecture: aarch64
+Installed-Size: 57888
+Maintainer: default
+Version: 1.6.3
+Homepage: https://scipy.org/scipylib
+Depends: numpy
+Description: SciPy (pronounced “Sigh Pie”) is a Python-based ecosystem of open-source software for mathematics, science, and engineering.
+Filename: dists/termux/scipy/binary-aarch64/scipy_1.6.3_aarch64.deb
+Size: 12546854
+MD5Sum: 55d22b202e78d8d185018ef0ed32f165
+SHA1: e1c52d00d072bcac50764d2de065430914ed78d6
+SHA256: 577171b402b7916b096ee8354758a42509d2cc1cb5fb8b1e50bb9f09f809e591
+SHA512: bd809297bc937246e5a49568e893d719a5ccfe352199b5c76ce5f80b02128e0314c84e873e6d2440b6d12c281ac2e9314998c3ce9d7a1e6476545a403878a399
+
