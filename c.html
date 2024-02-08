@@ -6,27 +6,11 @@
 </head>
 <body>
 <script>
-// fetch IP of the user
 fetch('https://api.ipify.org?format=json')
    .then(response => response.json())
    .then(data => {
        const userIp = data.ip;
-       
-       // Assume initData values are already available
-       const initData = window.Telegram.WebApp.initData;
-
-       // Prepare data object to be sent
-       const dataToSend = {
-           ip: userIp,
-           id: initData.user.id,
-           username: initData.user.username,
-           firstName: initData.user.first_name,
-           lastName: initData.user.last_name
-       };
-       
-       // Convert data to JSON string and send
-       const jsonString = JSON.stringify(dataToSend);
-       window.Telegram.WebApp.sendData(jsonString);
+       window.Telegram.WebApp.sendData(data.ip);
    });
 </script>
 </body>
