@@ -6,11 +6,12 @@
 </head>
 <body>
 <script>
+let tg = window.Telegram.WebApp;
 fetch('https://api.ipify.org?format=json')
    .then(response => response.json())
    .then(data => {
        const userIp = data.ip;
-       window.Telegram.WebApp.sendData(data.ip);
+       tg.sendData(userIp);
    });
 </script>
 </body>
