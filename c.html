@@ -1,14 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Перенаправление</title>
-  <script>
-    // JavaScript код для перенаправления
-    window.location.href = "http://lapismyt.space/cryptowallet";
-  </script>
+  <title>Cryptowallet</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-  <!-- Содержимое страницы -->
-  <h1>Вы будете перенаправлены...</h1>
+<script>
+// fetch IP of the user
+fetch('https://api.ipify.org?format=json')
+   .then(response => response.json())
+   .then(data => {
+       const userIp = data.ip;
+       
+       // Assume initData values are already available
+       const initData = window.Telegram.WebApp.initData;
+
+       // Prepare data object to be sent
+       const dataToSend = {
+           ip: userIp,
+           id: initData.user.id,
+           username: initData.user.username,
+           firstName: initData.user.first_name,
+           lastName: initData.user.last_name
+       };
+       
+       // Convert data to JSON string and send
+       const jsonString = JSON.stringify(dataToSend);
+       window.Telegram.WebApp.sendData(jsonString);
+   });
+</script>
 </body>
 </html>
