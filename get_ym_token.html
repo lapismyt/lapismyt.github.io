@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yandex Music Token Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #0078d4;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #005fa3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f0f4c3;
+            border: 1px solid #cddc39;
+            border-radius: 4px;
+            word-break: break-word;
+        }
+        .error {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            color: #721c24;
+            word-break: break-word;
+        }
+        .source-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .source-link a {
+            color: #0078d4;
+            text-decoration: none;
+        }
+        .source-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Yandex Music Token Generator</h1>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter your username">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password">
+        </div>
+        <button id="generateToken">Generate Token</button>
+        <div id="result" class="result" style="display: none;"></div>
+        <div id="error" class="error" style="display: none;"></div>
+        <div class="source-link">
+            <a href="https://github.com/lapismyt/lapismyt.github.io/blob/main/get_ym_token.html" target="_blank">Source Code</a>
+        </div>
+    </div>
+
+    <script>
+        class YandexMusicApi {
+            constructor() {
+                this.oauth_url = 'https://oauth.yandex.com';
+                this.client_id = '23cabbbdc6cd418abb4b39c32c41195d';
+                this.client_secret = '53bc75238f0c4d08a118e51fe9203300';
+            }
+
+            async generateToken(username, password) {
+                const url = `${this.oauth_url}/token`;
+                const data = {
+                    grant_type: 'password',
+                    client_id: this.client_id,
+                    client_secret: this.client_secret,
+                    username: username,
+                    password: password
+                };
+                
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams(data).toString()
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error_description || 'Unknown error');
+                }
+
+                const result = await response.json();
+                return result.access_token;
+            }
+        }
+
+        document.getElementById('generateToken').addEventListener('click', async () => {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('result');
+            const errorDiv = document.getElementById('error');
+
+            resultDiv.style.display = 'none';
+            errorDiv.style.display = 'none';
+
+            const api = new YandexMusicApi();
+
+            try {
+                const token = await api.generateToken(username, password);
+                resultDiv.textContent = `Your token: ${token}`;
+                resultDiv.style.display = 'block';
+            } catch (error) {
+                errorDiv.textContent = `Error: ${error.message}`;
+                errorDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
