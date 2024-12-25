@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fetch Yandex Music token</title>
+    <title>Fetch Yandex Music Token</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,11 +36,12 @@
             font-weight: bold;
         }
         input {
-            width: 100%;
+            width: calc(100% - 20px);
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 1rem;
+            box-sizing: border-box;
         }
         button {
             width: 100%;
@@ -87,20 +88,20 @@
 </head>
 <body>
     <div class="container">
-        <h1>Fetch Yandex Music token</h1>
+        <h1>Fetch Yandex Music Token</h1>
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" placeholder="Enter your username">
+            <input type="text" id="username" placeholder="Enter your YM username">
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter your password">
+            <input type="password" id="password" placeholder="Enter your YM password">
         </div>
         <button id="generateToken">Fetch Token</button>
         <div id="result" class="result" style="display: none;"></div>
         <div id="error" class="error" style="display: none;"></div>
         <div class="source-link">
-            <a href="https://github.com/lapismyt/lapismyt.github.io/blob/main/get_ym_token.html" target="_blank">Source Code</a>
+            <a href="https://lapismyt.github.io/get_ym_token.html" target="_blank">Source Code</a>
         </div>
     </div>
 
@@ -153,7 +154,7 @@
 
             try {
                 const token = await api.generateToken(username, password);
-                resultDiv.textContent = `Your token: ${token}`;
+                resultDiv.textContent = `Your YM token: ${token}`;
                 resultDiv.style.display = 'block';
             } catch (error) {
                 errorDiv.textContent = `Error: ${error.message}`;
