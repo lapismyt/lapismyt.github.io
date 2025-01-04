@@ -9,7 +9,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: var(--tg-theme-bg-color, #ffffff);
+            background-color: var(--tg-theme-bg-color, #f9f9f9);
             color: var(--tg-theme-text-color, #000000);
             display: flex;
             justify-content: center;
@@ -150,9 +150,10 @@
 
     <script>
         const tg = window.Telegram.WebApp; tg.expand();
+        
         function applyTheme() {
             const themeParams = tg.themeParams;
-            document.body.style.backgroundColor = themeParams.bg_color || '#ffffff';
+            document.body.style.backgroundColor = themeParams.bg_color || '#f9f9f9'; // Цвет фона по умолчанию
             document.body.style.color = themeParams.text_color || '#000000';
         }
         applyTheme();
