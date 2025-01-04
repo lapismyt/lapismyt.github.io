@@ -46,18 +46,18 @@
 <body>
     <div class="container">
         <div class="section">
-            <label for="temperature">Temperature</label>
-            <input type="number" id="temperature" min="0" max="1" step="0.01" value="0.7">
+            <label for="temperature">Креативность (0-1)</label>
+            <input type="number" id="temperature" min="0" max="1" step="0.1" value="0.7">
         </div>
 
         <div class="section">
-            <label for="model">Model</label>
+            <label for="model">Модель по умолчанию</label>
             <select id="model">
-                <option value="" disabled selected>Loading models...</option>
+                <option value="" disabled selected>Загрузка...</option>
             </select>
         </div>
 
-        <button id="save-settings">Save Settings</button>
+        <button id="save-settings">Сохранить настройки</button>
     </div>
 
     <script>
@@ -99,7 +99,7 @@
                 if (modelSelect.options.length === 0) {
                     const emptyOption = document.createElement('option');
                     emptyOption.value = '';
-                    emptyOption.textContent = 'No available models';
+                    emptyOption.textContent = 'Нет доступных моделей.';
                     modelSelect.appendChild(emptyOption);
                 }
             } catch (error) {
@@ -114,7 +114,7 @@
             const model = document.getElementById('model').value;
 
             if (!model) {
-                alert('Please select a model.');
+                alert('Пожалуйста, выберите модель.');
                 return;
             }
 
