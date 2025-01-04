@@ -74,22 +74,24 @@
 
         async function fetchModels() {
             try {
-                const response = await fetch('/api/models'); // Замените своим API
-                const data = await response.json();
+                const response = await fetch('/api/models');
+                const responseData = await response.json();
         
-                if (!data.data || !Array.isArray(data.data)) {
-                    console.error('Invalid API response:', data);
+                if (!responseData.data || !Array.isArray(responseData.data)) {
+                    console.error('Invalid API response:', responseData);
                     return;
                 }
         
+                const models = responseData.data;
                 const modelSelect = document.getElementById('model');
-                modelSelect.innerHTML = ''; // Clear existing options
         
-                data.data.forEach(model => {
+                modelSelect.innerHTML = '';
+        
+                models.forEach(model => {
                     if (model.endpoint === '/v1/chat/completions') {
                         const option = document.createElement('option');
                         option.value = model.id;
-                        option.textContent = model.id; // Или model.name, если нужно отображать читаемое имя
+                        option.textContent = model.id;
                         modelSelect.appendChild(option);
                     }
                 });
