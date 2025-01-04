@@ -6,16 +6,103 @@
     <title>Настройки бота</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { margin: 0; font-family: Arial, sans-serif; background-color: var(--tg-theme-bg-color, #ffffff); color: var(--tg-theme-text-color, #000000); }
-        .container { padding: 16px; }
-        .section { margin-bottom: 16px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; }
-        select, input, textarea { width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid var(--tg-theme-hint-color, #ccc); border-radius: 4px; background-color: var(--tg-theme-secondary-bg-color, #f5f5f5); color: var(--tg-theme-text-color, #000000); }
-        button { width: 100%; padding: 10px; background-color: var(--tg-theme-button-color, #0088cc); color: var(--tg-theme-button-text-color, #ffffff); border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
-        button:hover { opacity: 0.9; }
-        .resolution-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
-        .resolution-option { display: block; padding: 8px; text-align: center; border: 1px solid var(--tg-theme-hint-color, #ccc); border-radius: 4px; cursor: pointer; background-color: var(--tg-theme-secondary-bg-color, #f5f5f5); color: var(--tg-theme-text-color, #000000); }
-        .resolution-option.selected { border-color: var(--tg-theme-button-color, #0088cc); background-color: var(--tg-theme-button-color, #0088cc); color: var(--tg-theme-button-text-color, #ffffff); }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+            display: flex;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+
+        .section {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        select, input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid var(--tg-theme-hint-color, #ccc);
+            border-radius: 4px;
+            background-color: var(--tg-theme-secondary-bg-color, #f5f5f5);
+            color: var(--tg-theme-text-color, #000000);
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--tg-theme-button-color, #0088cc);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .resolution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 8px;
+        }
+
+        .resolution-option {
+            display: block;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid var(--tg-theme-hint-color, #ccc);
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: var(--tg-theme-secondary-bg-color, #f5f5f5);
+            color: var(--tg-theme-text-color, #000000);
+        }
+
+        .resolution-option.selected {
+            border-color: var(--tg-theme-button-color, #0088cc);
+            background-color: var(--tg-theme-button-color, #0088cc);
+            color: var(--tg-theme-button-text-color, #ffffff);
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 8px;
+            }
+
+            .container {
+                padding: 8px;
+            }
+
+            select, input, textarea {
+                font-size: 14px;
+            }
+
+            button {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -36,14 +123,16 @@
             <label>Разрешение</label>
             <div class="resolution-grid" id="resolution-options">
                 <div class="resolution-option" data-value="512x512">Квадрат</div>
-                <div class="resolution-option" data-value="512x768">Вертикальный</div>
-                <div class="resolution-option" data-value="768x512">Горизонтальный</div>
+                <div class="resolution-option" data-value="512x768">Портрет</div>
+                <div class="resolution-option" data-value="768x512">Пейзаж</div>
                 <div class="resolution-option" data-value="1024x1024">Квадрат HD</div>
-                <div class="resolution-option" data-value="1024x1536">Вертикальный HD</div>
-                <div class="resolution-option" data-value="1536x1024">Горизонтальный HD</div>
+                <div class="resolution-option" data-value="1024x1536">Портрет HD</div>
+                <div class="resolution-option" data-value="1536x1024">Пейзаж HD</div>
             </div>
-            <label for="negative-prompt">Негативный запрос</label>
-            <textarea id="negative-prompt" rows="4" placeholder="Введите негативный запрос..."></textarea>
+            <div style="margin-top: 16px;">
+                <label for="negative-prompt">Негативный запрос</label>
+                <textarea id="negative-prompt" rows="4" placeholder="Введите негативный запрос..."></textarea>
+            </div>
         </div>
         <button id="save-settings">Сохранить настройки</button>
     </div>
