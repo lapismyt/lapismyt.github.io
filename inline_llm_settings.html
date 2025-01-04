@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inline LLM Bot Settings</title>
+    <title>LLM Bot Settings</title>
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
     <style>
         body {
@@ -21,7 +21,7 @@
             margin-bottom: 8px;
             font-weight: bold;
         }
-        select, input {
+        select, input, textarea {
             width: 100%;
             padding: 8px;
             margin-bottom: 8px;
@@ -41,20 +41,62 @@
         button:hover {
             opacity: 0.9;
         }
+        .resolution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 8px;
+        }
+        .resolution-option {
+            display: block;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+        }
+        .resolution-option.selected {
+            border-color: var(--tg-theme-button-color, #0088cc);
+            background-color: var(--tg-theme-button-color, #0088cc);
+            color: var(--tg-theme-button-text-color, #ffffff);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="section">
-            <label for="temperature">Креативность (0-1)</label>
+            <h2>Настройки для текста</h2>
+            <label for="temperature">Креативность</label>
             <input type="number" id="temperature" min="0" max="1" step="0.1" value="0.7">
+
+            <label for="system-prompt">Системный промпт</label>
+            <textarea id="system-prompt" rows="4" placeholder="Введите системный промпт"></textarea>
+
+            <label for="text-model">Модель</label>
+            <select id="text-model">
+                <option value="" disabled selected>Загрузка списка...</option>
+            </select>
         </div>
 
         <div class="section">
-            <label for="model">Модель по умолчанию</label>
-            <select id="model">
-                <option value="" disabled selected>Загрузка...</option>
+            <h2>Настройки для изображений</h2>
+            <label for="image-model">Модель</label>
+            <select id="image-model">
+                <option value="" disabled selected>Загрузка списка...</option>
             </select>
+
+            <label>Resolution</label>
+            <div class="resolution-grid" id="resolution-options">
+                <div class="resolution-option" data-value="512x512">512x512</div>
+                <div class="resolution-option" data-value="512x768">512x768</div>
+                <div class="resolution-option" data-value="768x512">768x512</div>
+                <div class="resolution-option" data-value="1024x1024">1024x1024</div>
+                <div class="resolution-option" data-value="1024x1536">1024x1536</div>
+                <div class="resolution-option" data-value="1536x1024">1536x1024</div>
+            </div>
+
+            <label for="negative-prompt">Негативный промпт</label>
+            <textarea id="negative-prompt" rows="4" placeholder="Введите негативный промпт"></textarea>
         </div>
 
         <button id="save-settings">Сохранить настройки</button>
@@ -75,32 +117,45 @@
         async function fetchModels() {
             try {
                 const response = await fetch('https://api.zukijourney.com/v1/models');
-                const responseData = await response.json();
-        
-                if (!responseData.data || !Array.isArray(responseData.data)) {
-                    console.error('Invalid API response:', responseData);
+                const data = await response.json();
+
+                if (!data.data || !Array.isArray(data.data)) {
+                    console.error('Invalid API response:', data);
                     return;
                 }
-        
-                const models = responseData.data;
-                const modelSelect = document.getElementById('model');
-        
-                modelSelect.innerHTML = '';
-        
-                models.forEach(model => {
+
+                const textModelSelect = document.getElementById('text-model');
+                const imageModelSelect = document.getElementById('image-model');
+
+                textModelSelect.innerHTML = '';
+                imageModelSelect.innerHTML = '';
+
+                data.data.forEach(model => {
                     if (model.endpoint === '/v1/chat/completions') {
                         const option = document.createElement('option');
                         option.value = model.id;
                         option.textContent = model.id;
-                        modelSelect.appendChild(option);
+                        textModelSelect.appendChild(option);
+                    }
+                    if (model.endpoint === '/v1/images/generations') {
+                        const option = document.createElement('option');
+                        option.value = model.id;
+                        option.textContent = model.id;
+                        imageModelSelect.appendChild(option);
                     }
                 });
-        
-                if (modelSelect.options.length === 0) {
+
+                if (textModelSelect.options.length === 0) {
                     const emptyOption = document.createElement('option');
                     emptyOption.value = '';
-                    emptyOption.textContent = 'Нет доступных моделей.';
-                    modelSelect.appendChild(emptyOption);
+                    emptyOption.textContent = 'No available text models';
+                    textModelSelect.appendChild(emptyOption);
+                }
+                if (imageModelSelect.options.length === 0) {
+                    const emptyOption = document.createElement('option');
+                    emptyOption.value = '';
+                    emptyOption.textContent = 'No available image models';
+                    imageModelSelect.appendChild(emptyOption);
                 }
             } catch (error) {
                 console.error('Error fetching models:', error);
@@ -109,16 +164,49 @@
 
         fetchModels();
 
+        const resolutionOptions = document.querySelectorAll('.resolution-option');
+        resolutionOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                resolutionOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+            });
+        });
+
         document.getElementById('save-settings').addEventListener('click', () => {
             const temperature = parseFloat(document.getElementById('temperature').value);
-            const model = document.getElementById('model').value;
+            const textModel = document.getElementById('text-model').value;
+            const systemPrompt = document.getElementById('system-prompt').value;
 
-            if (!model) {
-                alert('Пожалуйста, выберите модель.');
+            const imageModel = document.getElementById('image-model').value;
+            const selectedResolution = document.querySelector('.resolution-option.selected')?.dataset.value;
+            const negativePrompt = document.getElementById('negative-prompt').value;
+
+            if (!textModel) {
+                alert('Пожалуйста, выберите модель для текста.');
+                return;
+            }
+            if (!imageModel) {
+                alert('Пожалуйста, выберите модель для изображений.');
+                return;
+            }
+            if (!selectedResolution) {
+                alert('Пожалуйста, выберите разрешение для изображений');
                 return;
             }
 
-            const settings = { temperature, model };
+            const settings = {
+                text: {
+                    temperature,
+                    model: textModel,
+                    systemPrompt
+                },
+                image: {
+                    model: imageModel,
+                    resolution: selectedResolution,
+                    negativePrompt
+                }
+            };
+
             tg.sendData(JSON.stringify(settings));
         });
     </script>
