@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Настройки бота</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
     <style>
         body {
             margin: 0;
@@ -14,6 +14,7 @@
             display: flex;
             justify-content: center;
             padding: 16px;
+            box-sizing: border-box;
         }
 
         .container {
@@ -35,6 +36,7 @@
 
         select, input, textarea {
             width: 100%;
+            max-width: 100%;
             padding: 10px;
             margin-bottom: 16px;
             border: 1px solid var(--tg-theme-hint-color, #ccc);
@@ -42,6 +44,11 @@
             background-color: var(--tg-theme-secondary-bg-color, #f5f5f5);
             color: var(--tg-theme-text-color, #000000);
             font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
         }
 
         button {
@@ -82,10 +89,6 @@
             color: var(--tg-theme-button-text-color, #ffffff);
         }
 
-        textarea {
-            resize: vertical;
-        }
-
         @media (max-width: 600px) {
             body {
                 padding: 8px;
@@ -97,6 +100,7 @@
 
             select, input, textarea {
                 font-size: 14px;
+                max-width: 100%;
             }
 
             button {
@@ -174,11 +178,6 @@
                 option.classList.add('selected');
             });
         });
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            document.getElementById('save-settings').style.display = 'none';
-            tg.MainButton.text = 'Сохранить'; tg.MainButton.show();
-            tg.MainButton.onClick(() => { saveSettings(); });
-        }
         function saveSettings() {
             const temperature = parseFloat(document.getElementById('temperature').value);
             const textModel = document.getElementById('text-model').value;
@@ -191,6 +190,14 @@
             if (!selectedResolution) { alert('Выберите разрешение.'); return; }
             const settings = { text: { temperature, model: textModel, systemPrompt }, image: { model: imageModel, resolution: selectedResolution, negativePrompt } };
             tg.sendData(JSON.stringify(settings));
+        }
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            document.getElementById('save-settings').style.display = 'none';
+            tg.MainButton.text = 'Сохранить'; tg.MainButton.show();
+            tg.MainButton.onClick(() => { saveSettings(); });
+        } else {
+            document.write(tg.initDataUnsafe)
+            document.write(tg.initData)
         }
     </script>
 </body>
