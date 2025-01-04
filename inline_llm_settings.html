@@ -9,7 +9,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: var(--tg-theme-bg-color, #f9f9f9);
+            background-color: var(--tg-theme-bg-color, #f5f5f5); /* Используем тему Telegram или светлый фон */
             color: var(--tg-theme-text-color, #000000);
             display: flex;
             justify-content: center;
@@ -22,7 +22,7 @@
             max-width: 600px;
             padding: 16px;
             box-sizing: border-box;
-            background-color: #f9f9f9;
+            background-color: var(--tg-theme-secondary-bg-color, #ffffff); /* Вторичный фон из темы Telegram */
             border-radius: 8px;
         }
 
@@ -43,7 +43,7 @@
             margin-bottom: 16px;
             border: 1px solid var(--tg-theme-hint-color, #ccc);
             border-radius: 4px;
-            background-color: var(--tg-theme-secondary-bg-color, #f5f5f5);
+            background-color: var(--tg-theme-input-bg-color, #f5f5f5);
             color: var(--tg-theme-text-color, #000000);
             font-size: 16px;
             box-sizing: border-box;
@@ -150,10 +150,9 @@
 
     <script>
         const tg = window.Telegram.WebApp; tg.expand();
-        
         function applyTheme() {
             const themeParams = tg.themeParams;
-            document.body.style.backgroundColor = themeParams.bg_color || '#f9f9f9'; // Цвет фона по умолчанию
+            document.body.style.backgroundColor = themeParams.bg_color || '#f5f5f5';  // Исправляем фон
             document.body.style.color = themeParams.text_color || '#000000';
         }
         applyTheme();
