@@ -74,20 +74,32 @@
 
         async function fetchModels() {
             try {
-                const response = await fetch('https://api.zukijourney.com/v1/models');
+                const response = await fetch('/api/models'); // Замените своим API
                 const data = await response.json();
+        
+                if (!data.data || !Array.isArray(data.data)) {
+                    console.error('Invalid API response:', data);
+                    return;
+                }
+        
                 const modelSelect = document.getElementById('model');
-
-                modelSelect.innerHTML = '';
-
-                data.forEach(model => {
+                modelSelect.innerHTML = ''; // Clear existing options
+        
+                data.data.forEach(model => {
                     if (model.endpoint === '/v1/chat/completions') {
                         const option = document.createElement('option');
                         option.value = model.id;
-                        option.textContent = model.name;
+                        option.textContent = model.id; // Или model.name, если нужно отображать читаемое имя
                         modelSelect.appendChild(option);
                     }
                 });
+        
+                if (modelSelect.options.length === 0) {
+                    const emptyOption = document.createElement('option');
+                    emptyOption.value = '';
+                    emptyOption.textContent = 'No available models';
+                    modelSelect.appendChild(emptyOption);
+                }
             } catch (error) {
                 console.error('Error fetching models:', error);
             }
@@ -95,7 +107,6 @@
 
         fetchModels();
 
-        // Save settings
         document.getElementById('save-settings').addEventListener('click', () => {
             const temperature = parseFloat(document.getElementById('temperature').value);
             const model = document.getElementById('model').value;
